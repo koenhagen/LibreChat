@@ -1,12 +1,6 @@
 name: Backend Unit Tests
 on:
-  pull_request:
-    branches:
-      - main
-      - dev
-      - release/*
-    paths:
-      - 'api/**'
+  push:
 jobs:
   tests_Backend:
     name: Run Backend unit tests
@@ -37,7 +31,11 @@ jobs:
         run: npm run build:data-provider
 
       - name: Run unit tests
-        run: cd api && npm run test:ci
+        uses: koenhagen/measure-energy-action@v0.33
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: cd api && npm run test:ci
+          count: 1
 
       - name: Run librechat-data-provider unit tests
         run: cd packages/data-provider && npm run test:ci
