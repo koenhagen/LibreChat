@@ -34,5 +34,8 @@ jobs:
         run: npm run frontend:ci
 
       - name: Run unit tests
-        run: npm run test:ci --verbose
-        working-directory: client
+        uses: koenhagen/measure-energy-action@v0.33
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          run: cnpm run test:ci --verbose
+          count: 1
